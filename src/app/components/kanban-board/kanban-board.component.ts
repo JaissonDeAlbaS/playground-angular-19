@@ -1,17 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../services/task.service';
 import { Column } from '../../models/column.model';
+import { Task } from '../../models/task.model';
+import { TaskFormComponent } from '../task-form/task-form.component';
 
 @Component({
   selector: 'app-kanban-board',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TaskFormComponent],
   templateUrl: './kanban-board.component.html',
   styleUrl: './kanban-board.component.css'
 })
 export class KanbanBoardComponent {
   private readonly taskService = inject(TaskService);
+
+  // Modal state
+  showModal = signal(false);
+  editingTask = signal<Task | undefined>(undefined);
 
   readonly columns: Column[] = [
     { id: 'todo', title: 'Por hacer', status: 'todo', tasks: [] },
@@ -92,5 +98,33 @@ export class KanbanBoardComponent {
       case 'done': return 'bg-emerald-500 shadow-lg shadow-emerald-500/50';
       default: return 'bg-slate-500';
     }
+  }
+
+  // Modal methods
+  openCreateModal() {
+    this.editingTask.set(undefined);
+    this.showModal.set(true);
+  }
+
+  openEditModal(task: Task) {
+    this.editingTask.set(task);
+    this.showModal.set(true);
+  }
+
+  closeModal() {
+    this.showModal.set(false);
+    this.editingTask.set(undefined);
+  }
+
+  onSaveTask(taskData: Omit<Task, 'id' | 'createdAt'>) {
+    const task = this.editingTask();
+    if (task) {
+      // Update existing task
+      this.taskService.updateTask(task.id, taskData);
+    } else {
+      // Create new task
+      this.taskService.createTask(taskData);
+    }
+    this.closeModal();
   }
 }

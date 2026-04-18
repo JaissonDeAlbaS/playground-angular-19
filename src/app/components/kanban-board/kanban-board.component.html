@@ -1,7 +1,18 @@
 <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8">
   <!-- Header -->
   <header class="text-center mb-8">
-    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Tablero Kanban</h1>
+    <div class="flex items-center justify-center gap-4 mb-2">
+      <h1 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Tablero Kanban</h1>
+      <button 
+        (click)="openCreateModal()"
+        class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        Nueva Tarea
+      </button>
+    </div>
     <p class="text-slate-400 text-sm md:text-base">Organiza tus tareas arrastrando entre columnas</p>
   </header>
 
@@ -33,6 +44,7 @@
               class="task-card group bg-slate-700/60 hover:bg-slate-700 rounded-lg p-4 cursor-grab active:cursor-grabbing transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 border border-slate-600/50 hover:border-slate-500"
               draggable="true"
               (dragstart)="onDragStart($event, task.id)"
+              (dblclick)="openEditModal(task)"
             >
               <!-- Task Header -->
               <div class="flex justify-between items-start gap-2 mb-2">
@@ -82,4 +94,13 @@
       </div>
     }
   </div>
+
+  <!-- Modal -->
+  @if (showModal()) {
+    <app-task-form 
+      [task]="editingTask()"
+      (save)="onSaveTask($event)"
+      (cancel)="closeModal()"
+    />
+  }
 </div>

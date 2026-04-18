@@ -1,0 +1,139 @@
+/* TaskFormComponent Styles */
+
+/* Modal Overlay Transitions */
+.modal-overlay {
+  transition: opacity 0.25s ease-out, visibility 0.25s ease-out;
+}
+
+.modal-overlay.pointer-events-none {
+  pointer-events: none;
+}
+
+/* Modal Content Animation */
+.modal-content {
+  transition: 
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease-out;
+  will-change: transform, opacity;
+}
+
+/* Form Input Focus States */
+.form-input {
+  transition: 
+    border-color 0.2s ease-out,
+    box-shadow 0.2s ease-out,
+    background-color 0.2s ease-out;
+}
+
+.form-input:focus {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+/* Button Hover Effects */
+.cancel-button:hover {
+  transform: translateY(-1px);
+}
+
+.save-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.save-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Close Button Animation */
+.close-button {
+  transition: 
+    background-color 0.2s ease-out,
+    color 0.2s ease-out,
+    transform 0.2s ease-out;
+}
+
+.close-button:hover {
+  transform: scale(1.05) rotate(90deg);
+}
+
+.close-button:active {
+  transform: scale(0.95) rotate(90deg);
+}
+
+/* Error Message Animation */
+.error-message {
+  animation: slideIn 0.15s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form Field Focus Indicators */
+.form-field:focus-within label {
+  color: #34d399;
+}
+
+/* Custom Scrollbar for Modal (if content overflows) */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(51, 65, 85, 0.3);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.5);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
+
+/* Date Input Styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Selection Styling */
+::selection {
+  background-color: rgba(16, 185, 129, 0.3);
+  color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .modal-content {
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+
+  .modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}
+
+/* Loading State (if needed) */
+.save-button:disabled {
+  background-color: #059669;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

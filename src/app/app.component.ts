@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { KanbanBoardComponent } from './components/kanban-board/kanban-board.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [KanbanBoardComponent],
+  template: '<app-kanban-board />',
+  styles: [`
+    :host {
+      display: block;
+    }
+  `]
 })
 export class AppComponent {
   title = 'playground-angular-21';

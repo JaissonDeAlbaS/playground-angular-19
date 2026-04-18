@@ -1,0 +1,131 @@
+<div
+  class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+  [class.opacity-0]="!isVisible()"
+  [class.opacity-100]="isVisible()"
+  [class.pointer-events-none]="!isVisible()"
+  (click)="onOverlayClick($event)"
+  (keydown)="onKeydown($event)"
+  tabindex="-1"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-labelledby]="'modal-title'"
+>
+  <div
+    class="modal-content w-full max-w-md bg-slate-800 rounded-xl shadow-2xl border border-slate-700 overflow-hidden"
+    [class.scale-95]="!isVisible()"
+    [class.scale-100]="isVisible()"
+    [class.opacity-0]="!isVisible()"
+    [class.opacity-100]="isVisible()"
+    [class.translate-y-4]="!isVisible()"
+    [class.translate-y-0]="isVisible()"
+    transition-style="in:custom:n quarters"
+  >
+    <!-- Header -->
+    <div class="modal-header flex items-center justify-between px-6 py-4 border-b border-slate-700">
+      <h2 id="modal-title" class="text-lg font-semibold text-white">
+        @if (isEditMode()) {
+          <span>Editar Tarea</span>
+        } @else {
+          <span>Nueva Tarea</span>
+        }
+      </h2>
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="close-button w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition-colors duration-200"
+        aria-label="Cerrar modal"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="modal-body px-6 py-5 space-y-5">
+      <!-- Title Field -->
+      <div class="form-field">
+        <label for="title" class="block text-sm font-medium text-slate-300 mb-1.5">
+          Título <span class="text-red-400">*</span>
+        </label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          placeholder="Ej: Implementar login con OAuth"
+          class="form-input w-full px-4 py-2.5 bg-slate-700/50 border rounded-lg text-white placeholder-slate-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+          [class.border-slate-600]="!isFieldInvalid('title') && !isFieldValid('title')"
+          [class.border-red-500]="isFieldInvalid('title')"
+          [class.border-emerald-500]="isFieldValid('title')"
+        />
+        @if (isFieldInvalid('title')) {
+          <p class="error-message mt-1.5 text-sm text-red-400">
+            {{ getErrorMessage('title') }}
+          </p>
+        }
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-field">
+        <label for="description" class="block text-sm font-medium text-slate-300 mb-1.5">
+          Descripción
+        </label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Describe los detalles de la tarea..."
+          rows="3"
+          class="form-input w-full px-4 py-2.5 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 resize-none"
+        ></textarea>
+      </div>
+
+      <!-- Status Field -->
+      <div class="form-field">
+        <label for="status" class="block text-sm font-medium text-slate-300 mb-1.5">
+          Estado
+        </label>
+        <select
+          id="status"
+          formControlName="status"
+          class="form-input w-full px-4 py-2.5 bg-slate-700/50 border border-slate-600 rounded-lg text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 cursor-pointer appearance-none"
+          style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2394a3b8%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.25rem;"
+        >
+          <option value="todo">Por hacer</option>
+          <option value="in-progress">En progreso</option>
+          <option value="done">Completado</option>
+        </select>
+      </div>
+
+      <!-- Due Date Field -->
+      <div class="form-field">
+        <label for="dueDate" class="block text-sm font-medium text-slate-300 mb-1.5">
+          Fecha límite
+        </label>
+        <input
+          type="date"
+          id="dueDate"
+          formControlName="dueDate"
+          class="form-input w-full px-4 py-2.5 bg-slate-700/50 border border-slate-600 rounded-lg text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 cursor-pointer"
+        />
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions flex items-center justify-end gap-3 pt-2">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="cancel-button px-5 py-2.5 text-sm font-medium text-slate-300 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500/50"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="save-button px-5 py-2.5 text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="taskForm.invalid"
+        >
+          {{ isEditMode() ? 'Actualizar' : 'Crear' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -4,11 +4,12 @@ import { TaskService } from '../../services/task.service';
 import { Column } from '../../models/column.model';
 import { Task } from '../../models/task.model';
 import { TaskFormComponent } from '../task-form/task-form.component';
+import { ButtonComponent, BadgeComponent, TaskCardComponent } from '../../components/design-system';
 
 @Component({
   selector: 'app-kanban-board',
   standalone: true,
-  imports: [CommonModule, TaskFormComponent],
+  imports: [CommonModule, TaskFormComponent, ButtonComponent, BadgeComponent, TaskCardComponent],
   templateUrl: './kanban-board.component.html',
   styleUrl: './kanban-board.component.css'
 })

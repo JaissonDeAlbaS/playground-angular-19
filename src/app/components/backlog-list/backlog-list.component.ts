@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 import { TaskFormComponent } from '../task-form/task-form.component';
+import { ButtonComponent, BadgeComponent, InputComponent } from '../../components/design-system';
 
 type SortOption = 'created-desc' | 'created-asc' | 'dueDate-desc' | 'dueDate-asc';
 type StatusFilter = 'all' | 'todo' | 'in-progress' | 'done';
@@ -11,7 +12,7 @@ type StatusFilter = 'all' | 'todo' | 'in-progress' | 'done';
 @Component({
   selector: 'app-backlog-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, TaskFormComponent],
+  imports: [CommonModule, FormsModule, TaskFormComponent, ButtonComponent, BadgeComponent, InputComponent],
   templateUrl: './backlog-list.component.html',
   styleUrl: './backlog-list.component.css'
 })

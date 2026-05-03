@@ -2,11 +2,13 @@ import { Component, input, output, signal, computed, effect, OnInit } from '@ang
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../models/task.model';
+import { ButtonComponent, ButtonVariant, ButtonSize } from '../../components/design-system';
+import { InputComponent, FormFieldComponent } from '../../components/design-system';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, InputComponent, FormFieldComponent],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css'
 })

@@ -78,5 +78,7 @@ Desarrollador: Jaisson De Alba Santos
 
 ## 📚 Documentación Adicional
 
+* [Código de Conducta](CODE_OF_CONDUCT.md)
+* [Política de Seguridad](SECURITY.md)
 * [Estándares de Desarrollo y Contribuciones](CONTRIBUTING.md)
 * [Licencia](LICENSE)
